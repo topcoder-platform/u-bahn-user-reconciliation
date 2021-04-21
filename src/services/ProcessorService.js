@@ -13,10 +13,28 @@ const helper = require('../common/helper')
  * @param {Object} message the kafka message
  * @returns {Promise}
  */
-async function processSync (message) {
-  const { handle } = message.payload
-  const tcToken = await helper.getTopcoderM2Mtoken()
-  const ubToken = await helper.getUbahnM2Mtoken()
+async function processSync(message) {
+  try {
+    const { handle } = message.payload
+    const tcToken = await helper.getTopcoderM2Mtoken()
+    const member = await helper.getMember(handle, tcToken)
+    const location = member.homeCountryCode || member.competitionCountryCode || null
+    const payload = {
+      id : member.id,
+      handle: handle,
+      firstName : member.firstName,
+      lastName: member.lastName,
+      email: member.email,
+      country : {
+        isoAlpha3Code: location
+      },
+      active : (member.status === 'ACTIVE') ? true : false 
+    }
+    await postEvent(config.PUBLISH_TOPIC, payload, tcToken)
+  } catch (e) {
+    logger.error(`unable to process the message, error : ${JSON.stringify(e)}`)
+  }
+
 }
 
 processSync.schema = {

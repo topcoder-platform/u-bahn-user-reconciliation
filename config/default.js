@@ -10,10 +10,14 @@ module.exports = {
   // for the local Kafka, they are not needed
   KAFKA_CLIENT_CERT: process.env.KAFKA_CLIENT_CERT,
   KAFKA_CLIENT_CERT_KEY: process.env.KAFKA_CLIENT_CERT_KEY,
-
+  KAFKA_MESSAGE_ORIGINATOR: process.env.KAFKA_MESSAGE_ORIGINATOR || 'u-bahn-user-reconciliation-processor',
+ 
   // Kafka group id
   KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID || 'u-bahn-user-reconciliation-processor',
   USER_RECONCILATION_TOPIC: process.env.USER_RECONCILATION_TOPIC || 'backgroundjob.reconcile.user',
+  PUBLISH_TOPIC: process.env.PUBLISH_TOPIC_TOPIC || 'legacy.sync.user',
+
+  V5_API_URL: process.env.V5_API_URL || 'https://api.topcoder-dev.com/v5',
 
   UBAHN_API_URL: process.env.UBAHN_API_URL || 'https://api.topcoder-dev.com/v5',
   MEMBERS_API_URL: process.env.MEMBERS_API_URL || 'https://api.topcoder-dev.com/v5/members',
