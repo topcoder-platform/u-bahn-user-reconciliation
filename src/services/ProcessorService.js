@@ -18,6 +18,7 @@ async function processSync(message) {
     const { handle } = message.payload
     const tcToken = await helper.getTopcoderM2Mtoken()
     const member = await helper.getMember(handle, tcToken)
+    logger.debug(`got member detail: ${JSON.stringify(member)}`)
     const location = member.homeCountryCode || member.competitionCountryCode || null
     const payload = {
       id : member.id,

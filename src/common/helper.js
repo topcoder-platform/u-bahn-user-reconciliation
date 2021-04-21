@@ -38,6 +38,7 @@ function getKafkaOptions() {
  * @param {String} handle The member handle
  */
 async function getMember(handle, token) {
+  logger.debug(`calling member api for handle ${handle}`)
   const res = await axios.get(`${config.V5_API_URL}/members/${qs.escape(handle)}`, { headers: { Authorization: `Bearer ${token}` } })
   return _.get(res, 'data', {})
 }
