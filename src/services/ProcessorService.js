@@ -31,7 +31,7 @@ async function processSync(message) {
       },
       active : (member.status === 'ACTIVE') ? true : false 
     }
-    await postEvent(config.PUBLISH_TOPIC, payload, tcToken)
+    await helper.postEvent(config.PUBLISH_TOPIC, payload, tcToken)
   } catch (e) {
     logger.error(`unable to process the message, error : ${JSON.stringify(e)}`)
   }
