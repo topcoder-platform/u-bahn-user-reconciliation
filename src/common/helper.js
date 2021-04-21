@@ -8,34 +8,9 @@ const qs = require('querystring')
 const m2mAuth = require('tc-core-library-js').auth.m2m
 const logger = require('./logger')
 
-const ubahnM2MConfig = _.pick(config, ['AUTH0_URL', 'AUTH0_UBAHN_AUDIENCE', 'AUTH0_PROXY_SERVER_URL'])
-const topcoderM2MConfig = _.pick(config, ['AUTH0_URL', 'AUTH0_TOPCODER_AUDIENCE', 'AUTH0_PROXY_SERVER_URL'])
+const topcoderM2MConfig = _.pick(config, ['AUTH0_URL', 'AUTH0_AUDIENCE', 'AUTH0_PROXY_SERVER_URL'])
 
-const ubahnM2M = m2mAuth({ ...ubahnM2MConfig, AUTH0_AUDIENCE: ubahnM2MConfig.AUTH0_UBAHN_AUDIENCE })
-const topcoderM2M = m2mAuth({ ...topcoderM2MConfig, AUTH0_AUDIENCE: topcoderM2MConfig.AUTH0_TOPCODER_AUDIENCE })
-
-/**
- * Use this function to halt execution
- * js version of sleep()
- * @param {Number} ms Timeout in ms
- */
-async function sleep(ms) {
-  if (!ms) {
-    ms = config.SLEEP_TIME
-  }
-
-  logger.debug(`Sleeping for ${ms} ms`)
-
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-/* Function to get M2M token
- * (U-Bahn APIs only)
- * @returns {Promise}
- */
-async function getUbahnM2Mtoken() {
-  return ubahnM2M.getMachineToken(config.AUTH0_CLIENT_ID, config.AUTH0_CLIENT_SECRET)
-}
+const topcoderM2M = m2mAuth({ ...topcoderM2MConfig, AUTH0_AUDIENCE: topcoderM2MConfig.AUTH0_AUDIENCE })
 
 /* Function to get M2M token
  * (Topcoder APIs only)
@@ -63,7 +38,7 @@ function getKafkaOptions() {
  * @param {String} handle The member handle
  */
 async function getMember(handle, token) {
-  const res = await axios.get(`${config.MEMBERS_API_URL}/${qs.escape(handle)}`, { headers: { Authorization: `Bearer ${token}` } })
+  const res = await axios.get(`${config.V5_API_URL}/members${qs.escape(handle)}`, { headers: { Authorization: `Bearer ${token}` } })
   return _.get(res, 'data', {})
 }
 
@@ -89,7 +64,6 @@ async function postEvent (topic, payload, token) {
 module.exports = {
   getKafkaOptions,
   getTopcoderM2Mtoken,
-  getUbahnM2Mtoken,
   getMember,
   postEvent
 }
