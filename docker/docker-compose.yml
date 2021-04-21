@@ -1,0 +1,10 @@
+version: '3'
+services:
+  u-bahn-user-reconciliation-processor:
+    image: u-bahn-user-reconciliation-processor:latest
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    env_file:
+      - api.env
+    network_mode: "host"
