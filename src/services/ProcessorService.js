@@ -21,7 +21,7 @@ async function processSync(message) {
     logger.debug(`got member detail: ${JSON.stringify(member)}`)
     const location = member.homeCountryCode || member.competitionCountryCode || null
     const payload = {
-      id : member.userId,
+      id : _.toString(member.userId),
       handle: handle,
       firstName : member.firstName,
       lastName: member.lastName,
