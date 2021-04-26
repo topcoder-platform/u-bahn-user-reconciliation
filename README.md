@@ -22,15 +22,13 @@ The following parameters can be set in config files or in env variables:
     if provided, it can be either path to private key file or private key content
 - KAFKA_GROUP_ID: the Kafka group id, default value is 'user-reconciliation-processor'
 - USER_RECONCILATION_TOPIC: Kafka topic, default value is 'backgroundjob.reconcile.user'
-- UBAHN_API_URL: The ubahn api url, default value: 'https://api.topcoder-dev.com/v5'
-- MEMBERS_API_URL: The topcoder member api url, default value: 'https://api.topcoder-dev.com/v5/members'
+- V5_API_URL: The topcoder v5 api base url, default value: 'https://api.topcoder-dev.com/v5'
 - AUTH0_URL: The auth0 url, default value: 'https://topcoder-dev.auth0.com/oauth/token'
-- AUTH0_UBAHN_AUDIENCE: The auth0 audience for accessing ubahn api(s), default value: 'https://u-bahn.topcoder-dev.com'
-- AUTH0_TOPCODER_AUDIENCE: The auth0 audience for accessing ubahn api(s), default value: 'https://m2m.topcoder-dev.com/'
+- AUTH0_AUDIENCE: The auth0 audience for accessing ubahn api(s), default value: 'https://m2m.topcoder-dev.com/'
 - AUTH0_CLIENT_ID: The auth0 client id
 - AUTH0_CLIENT_SECRET: The auth0 client secret
 - AUTH0_PROXY_SERVER_URL: The auth0 proxy server url
-- SLEEP_TIME: The pause time between two create operations, default value: 1000 ms
+- PUBLISH_TOPIC: after processing publish to another kafka topic i.e. 'legacy.sync.user'
 
 There is a `/health` endpoint that checks for the health of the app. This sets up an expressjs server and listens on the environment variable `PORT`. It's not part of the configuration file and needs to be passed as an environment variable
 
